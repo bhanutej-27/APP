@@ -1,0 +1,18 @@
+class Book {
+    String title;
+    String author;
+    double price;
+
+    public static void main(String[] args) {
+
+        Book b = new Book();
+
+        b.title = "Harry potter";
+        b.author = "Jk rowling";
+        b.price = 780.00;
+
+        System.out.println("Book Title : " + b.title);
+        System.out.println("Author     : " + b.author);
+        System.out.println("Price      : ₹" + b.price);
+    }
+}
