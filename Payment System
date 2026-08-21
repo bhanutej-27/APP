@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+interface Payment {
+    void makePayment();
+}
+
+class UPI implements Payment {
+    public void makePayment() {
+        System.out.println("Payment done using UPI");
+    }
+}
+
+class CreditCard implements Payment {
+    public void makePayment() {
+        System.out.println("Payment done using Credit Card");
+    }
+}
+
+class NetBanking implements Payment {
+    public void makePayment() {
+        System.out.println("Payment done using Net Banking");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Payment p;
+
+        System.out.println("1. UPI");
+        System.out.println("2. Credit Card");
+        System.out.println("3. Net Banking");
+        System.out.print("Enter choice: ");
+
+        int choice = sc.nextInt();
+
+        if (choice == 1)
+            p = new UPI();
+        else if (choice == 2)
+            p = new CreditCard();
+        else
+            p = new NetBanking();
+
+        p.makePayment();
+    }
+}
