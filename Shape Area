@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+abstract class Shape {
+    abstract double calculateArea();
+}
+
+class Circle extends Shape {
+    double r;
+
+    Circle(double r) {
+        this.r = r;
+    }
+
+    double calculateArea() {
+        return 3.14 * r * r;
+    }
+}
+
+class Rectangle extends Shape {
+    double l, b;
+
+    Rectangle(double l, double b) {
+        this.l = l;
+        this.b = b;
+    }
+
+    double calculateArea() {
+        return l * b;
+    }
+}
+
+class Triangle extends Shape {
+    double b, h;
+
+    Triangle(double b, double h) {
+        this.b = b;
+        this.h = h;
+    }
+
+    double calculateArea() {
+        return 0.5 * b * h;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1. Circle");
+        System.out.println("2. Rectangle");
+        System.out.println("3. Triangle");
+
+        int choice = sc.nextInt();
+        Shape s;
+
+        if (choice == 1) {
+            System.out.print("Enter radius: ");
+            s = new Circle(sc.nextDouble());
+        } else if (choice == 2) {
+            System.out.print("Enter length and breadth: ");
+            s = new Rectangle(sc.nextDouble(), sc.nextDouble());
+        } else {
+            System.out.print("Enter base and height: ");
+            s = new Triangle(sc.nextDouble(), sc.nextDouble());
+        }
+
+        System.out.println("Area = " + s.calculateArea());
+    }
+}
