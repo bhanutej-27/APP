@@ -1,0 +1,46 @@
+interface Confidential {
+}
+
+class PublicDocument {
+    String name;
+
+    PublicDocument(String name) {
+        this.name = name;
+    }
+}
+
+class PrivateDocument implements Confidential {
+    String name;
+
+    PrivateDocument(String name) {
+        this.name = name;
+    }
+}
+
+class EmployeeDocument implements Confidential {
+    String name;
+
+    EmployeeDocument(String name) {
+        this.name = name;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Object[] documents = {
+            new PublicDocument("College Notice"),
+            new PrivateDocument("Bank Statement"),
+            new EmployeeDocument("Employee Record")
+        };
+
+        for (Object document : documents) {
+
+            if (document instanceof Confidential) {
+                System.out.println("Confidential Document");
+            } else {
+                System.out.println("Public Document");
+            }
+        }
+    }
+}
