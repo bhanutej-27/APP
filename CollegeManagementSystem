@@ -1,0 +1,72 @@
+package student;
+
+public class Student {
+
+    private int studentId;
+    private String studentName;
+    private String department;
+
+    public Student(int studentId, String studentName, String department) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.department = department;
+    }
+
+    public void displayStudentDetails() {
+        System.out.println("Student Details");
+        System.out.println("----------------");
+        System.out.println("Student ID   : " + studentId);
+        System.out.println("Student Name : " + studentName);
+        System.out.println("Department   : " + department);
+    }
+}
+
+package course;
+
+public class Course {
+
+    private String courseCode;
+    private String courseName;
+    private int credits;
+
+    public Course(String courseCode, String courseName, int credits) {
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.credits = credits;
+    }
+
+    public void displayCourseDetails() {
+        System.out.println("Course Details");
+        System.out.println("--------------");
+        System.out.println("Course Code : " + courseCode);
+        System.out.println("Course Name : " + courseName);
+        System.out.println("Credits     : " + credits);
+    }
+}
+
+import student.Student;
+import course.Course;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Student student = new Student(
+            101,
+            "Bhanu Tej",
+            "Computer Science and Engineering"
+        );
+
+        Course course = new Course(
+            "CS101",
+            "Java Programming",
+            4
+        );
+
+        student.displayStudentDetails();
+
+        System.out.println();
+
+        course.displayCourseDetails();
+    }
+}
