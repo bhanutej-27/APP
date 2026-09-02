@@ -1,0 +1,224 @@
+package accounts;
+
+public class Account {
+
+    protected int accountNumber;
+    protected String accountHolder;
+    protected double balance;
+
+    public Account(int accountNumber, String accountHolder, double balance) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+    }
+
+    public void displayDetails() {
+        System.out.println("Account Number : " + accountNumber);
+        System.out.println("Account Holder : " + accountHolder);
+        System.out.println("Balance        : Rs." + balance);
+    }
+}
+
+
+package accounts;
+
+public class SavingsAccount extends Account {
+
+    private double interestRate;
+
+    public SavingsAccount(int accountNumber, String accountHolder,
+                          double balance, double interestRate) {
+
+        super(accountNumber, accountHolder, balance);
+        this.interestRate = interestRate;
+    }
+
+    @Override
+    public void displayDetails() {
+
+        System.out.println("Savings Account");
+        System.out.println("----------------");
+        System.out.println("Account Number : " + accountNumber);
+        System.out.println("Account Holder : " + accountHolder);
+        System.out.println("Balance        : Rs." + balance);
+        System.out.println("Interest Rate  : " + interestRate + "%");
+    }
+}
+
+package accounts;
+
+public class CurrentAccount extends Account {
+
+    private double overdraftLimit;
+
+    public CurrentAccount(int accountNumber, String accountHolder,
+                          double balance, double overdraftLimit) {
+
+        super(accountNumber, accountHolder, balance);
+        this.overdraftLimit = overdraftLimit;
+    }
+
+    @Override
+    public void displayDetails() {
+
+        System.out.println("Current Account");
+        System.out.println("----------------");
+        System.out.println("Account Number  : " + accountNumber);
+        System.out.println("Account Holder  : " + accountHolder);
+        System.out.println("Balance         : Rs." + balance);
+        System.out.println("Overdraft Limit : Rs." + overdraftLimit);
+    }
+}
+
+package payments;
+
+public interface Payment {
+
+    void pay(double amount);
+}
+
+package payments;
+
+public interface SecurePayment extends Payment {
+
+    void verifyPayment();
+}
+
+package payments;
+
+public interface SecurePayment extends Payment {
+
+    void verifyPayment();
+}
+
+package transaction;
+
+public interface OnlineTransaction {
+    
+    // Tagging interface
+}
+
+package payments;
+
+import transaction.OnlineTransaction;
+
+public class UPIPayment implements SecurePayment, OnlineTransaction {
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("UPI Payment");
+        System.out.println("Amount Paid : Rs." + amount);
+    }
+
+    @Override
+    public void verifyPayment() {
+        System.out.println("UPI payment verified successfully.");
+    }
+}
+
+package payments;
+
+import transaction.OnlineTransaction;
+
+public class CardPayment implements Payment, OnlineTransaction {
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Card Payment");
+        System.out.println("Amount Paid : Rs." + amount);
+    }
+}
+
+import accounts.Account;
+import accounts.SavingsAccount;
+import accounts.CurrentAccount;
+
+import payments.Payment;
+import payments.UPIPayment;
+import payments.CardPayment;
+
+import transaction.OnlineTransaction;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        // ---------------------------------
+        // 1. Runtime Polymorphism
+        // ---------------------------------
+
+        System.out.println("===== ACCOUNT DETAILS =====");
+
+        Account account;
+
+        account = new SavingsAccount(
+            1001,
+            "Bhanu",
+            50000,
+            5.5
+        );
+
+        account.displayDetails();
+
+        System.out.println();
+
+        account = new CurrentAccount(
+            1002,
+            "Rahul",
+            75000,
+            25000
+        );
+
+        account.displayDetails();
+
+
+        // ---------------------------------
+        // 2. Payment Interface
+        // ---------------------------------
+
+        System.out.println("\n===== PAYMENT DETAILS =====");
+
+        Payment payment;
+
+        payment = new UPIPayment();
+        payment.pay(2500);
+
+        System.out.println();
+
+        payment = new CardPayment();
+        payment.pay(5000);
+
+
+        // ---------------------------------
+        // 3. Secure Payment
+        // ---------------------------------
+
+        System.out.println("\n===== SECURE PAYMENT =====");
+
+        UPIPayment upi = new UPIPayment();
+
+        upi.pay(3000);
+        upi.verifyPayment();
+
+
+        // ---------------------------------
+        // 4. Tagging Interface
+        // ---------------------------------
+
+        System.out.println("\n===== ONLINE TRANSACTION CHECK =====");
+
+        if (upi instanceof OnlineTransaction) {
+            System.out.println("UPI is an online transaction.");
+        }
+
+        CardPayment card = new CardPayment();
+
+        if (card instanceof OnlineTransaction) {
+            System.out.println("Card payment is an online transaction.");
+        }
+    }
+}
+
+
+
+
