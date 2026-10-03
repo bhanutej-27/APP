@@ -1,0 +1,73 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+
+public class CourseManagement extends JFrame {
+    JList<String> courseList;
+    JTable table;
+    DefaultTableModel model;
+    JTextField nameField;
+    JButton addBtn, removeBtn;
+
+    CourseManagement() {
+        setTitle("Student Course Management");
+        setSize(650, 400);
+        setLayout(new BorderLayout(10, 10));
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // Left: available courses
+        String[] courses = {"Java Programming", "Data Structures", "Database Systems",
+                            "Operating Systems", "Computer Networks", "Machine Learning"};
+        courseList = new JList<>(courses);
+        courseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane listScroll = new JScrollPane(courseList);
+        listScroll.setBorder(BorderFactory.createTitledBorder("Available Courses"));
+        listScroll.setPreferredSize(new Dimension(200, 0));
+        add(listScroll, BorderLayout.WEST);
+
+        // Center: registrations table
+        model = new DefaultTableModel(new String[]{"Student Name", "Selected Course", "Enrollment Status"}, 0);
+        table = new JTable(model);
+        JScrollPane tableScroll = new JScrollPane(table);
+        tableScroll.setBorder(BorderFactory.createTitledBorder("Registrations"));
+        add(tableScroll, BorderLayout.CENTER);
+
+        // Bottom: controls
+        JPanel bottom = new JPanel();
+        nameField = new JTextField(15);
+        addBtn = new JButton("Add Registration");
+        removeBtn = new JButton("Remove Registration");
+        bottom.add(new JLabel("Student Name:"));
+        bottom.add(nameField);
+        bottom.add(addBtn);
+        bottom.add(removeBtn);
+        add(bottom, BorderLayout.SOUTH);
+
+        addBtn.addActionListener(e -> {
+            String name = nameField.getText().trim();
+            String course = courseList.getSelectedValue();
+            if (name.isEmpty() || course == null) {
+                JOptionPane.showMessageDialog(this, "Enter a student name and select a course.");
+                return;
+            }
+            model.addRow(new Object[]{name, course, "Enrolled"});
+            nameField.setText("");
+        });
+
+        removeBtn.addActionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select a row to remove.");
+            } else {
+                model.removeRow(row);
+            }
+        });
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(CourseManagement::new);
+    }
+}
