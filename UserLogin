@@ -1,0 +1,49 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class UserLogin extends JFrame {
+    JTextField userField;
+    JPasswordField passField;
+    JCheckBox remember, notifications;
+    JButton login;
+
+    UserLogin() {
+        setTitle("User Login");
+        setSize(380, 260);
+        setLayout(new GridLayout(5, 2, 10, 10));
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        userField = new JTextField();
+        passField = new JPasswordField();
+        remember = new JCheckBox("Remember Me");
+        notifications = new JCheckBox("Receive Notifications");
+        login = new JButton("Login");
+
+        add(new JLabel("  Username:")); add(userField);
+        add(new JLabel("  Password:")); add(passField);
+        add(remember);                  add(new JLabel());
+        add(notifications);             add(new JLabel());
+        add(new JLabel());              add(login);
+
+        login.addActionListener(e -> {
+            String user = userField.getText().trim();
+            String pass = new String(passField.getPassword());
+
+            if (user.equals("admin") && pass.equals("1234")) {
+                String msg = "Login successful! Welcome, " + user + ".";
+                if (remember.isSelected()) msg += "\nYou will be remembered.";
+                if (notifications.isSelected()) msg += "\nNotifications are enabled.";
+                JOptionPane.showMessageDialog(this, msg, "Login", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid username or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(UserLogin::new);
+    }
+}
