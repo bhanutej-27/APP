@@ -1,0 +1,65 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class TextEditor extends JFrame {
+    JTextArea textArea;
+
+    TextEditor() {
+        setTitle("Simple Text Editor");
+        setSize(600, 450);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        textArea = new JTextArea();
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        add(new JScrollPane(textArea), BorderLayout.CENTER);
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem newItem = new JMenuItem("New");
+        JMenuItem clearItem = new JMenuItem("Clear");
+        JMenuItem exitItem = new JMenuItem("Exit");
+        fileMenu.add(newItem);
+        fileMenu.add(clearItem);
+        fileMenu.addSeparator();
+        fileMenu.add(exitItem);
+
+        JMenu editMenu = new JMenu("Edit");
+        JMenuItem cutItem = new JMenuItem("Cut");
+        JMenuItem copyItem = new JMenuItem("Copy");
+        JMenuItem pasteItem = new JMenuItem("Paste");
+        JMenuItem selectAllItem = new JMenuItem("Select All");
+        editMenu.add(cutItem);
+        editMenu.add(copyItem);
+        editMenu.add(pasteItem);
+        editMenu.addSeparator();
+        editMenu.add(selectAllItem);
+
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        setJMenuBar(menuBar);
+
+        newItem.addActionListener(e -> {
+            if (!textArea.getText().isEmpty()) {
+                int c = JOptionPane.showConfirmDialog(this, "Discard current text and start a new document?",
+                        "New", JOptionPane.YES_NO_OPTION);
+                if (c != JOptionPane.YES_OPTION) return;
+            }
+            textArea.setText("");
+        });
+        clearItem.addActionListener(e -> textArea.setText(""));
+        exitItem.addActionListener(e -> System.exit(0));
+
+        cutItem.addActionListener(e -> textArea.cut());
+        copyItem.addActionListener(e -> textArea.copy());
+        pasteItem.addActionListener(e -> textArea.paste());
+        selectAllItem.addActionListener(e -> textArea.selectAll());
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(TextEditor::new);
+    }
+}
